@@ -57,7 +57,7 @@ void clear(){
 int main(){
 	int pil;
 	stack:
-	system("cls"); tampil;
+	system("cls"); tampil();
 	cout<<"Pilih menu : \n1. Push\n2. Pop\n3. Clear\nPilih...";
 	cin>>pil;
 	if(pil==1){
