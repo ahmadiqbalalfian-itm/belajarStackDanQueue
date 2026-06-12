@@ -129,7 +129,21 @@ int main (){
 		cin>>max;
 		stack();
 		
-		
+			int pil;
+			stack:
+			system("cls"); tampil();
+			cout<<"Pilih menu : \n1. Push\n2. Pop\n3. Clear\nPilih...";
+			cin>>pil;
+			if(pil==1){
+				push();
+				goto stack;
+			}else if (pil == 2){
+				pop();
+				goto stack;
+			} else{
+				clear();
+				goto stack;
+			}
 		
 		goto menu;
 		
