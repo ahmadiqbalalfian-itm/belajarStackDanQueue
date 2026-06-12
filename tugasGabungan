@@ -136,8 +136,27 @@ int main (){
 	} else{
 		cout<<"Masukkan banyak data yang akan dimasukkan";
 		cin>>max;
-		queue();
 		
+		queue();
+		int pil;
+		queue:
+		system ("cls");
+		tampil();
+		
+		cout<<"Menu Pilihan\n1. Enqeue\n2. Dequeue\n3. Clear\n Pilihan... :";
+		cin>>pil;
+		if(pil==1){
+			cout<<"Enqueue"<<endl;
+			enqueue();
+			goto queue;
+		} else if (pil==2){
+			cout<<"Dequeue"<<endl;
+			dequeue();
+			goto queue;
+		} else if(pil==3){
+			clear();
+			goto queue;
+		}
 		
 		goto menu;
 	}
