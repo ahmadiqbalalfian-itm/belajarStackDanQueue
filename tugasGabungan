@@ -1,180 +1,242 @@
-//pilih queue atau stack
-
 #include <iostream>
 using namespace std;
 
-void queue(){
-	string data [max];
-	int top=0;
-	
-			bool isFull(){
-				if(top>=max){
-					return true;
-				} else{
-					return false;
-				}
-			}
-			
-			bool isEmpty(){
-				if(top==0){
-					return true;
-				} else {
-					return false;
-				}
-			}		
-			
-			void enqueue(){
-				if(!isFull()){
-	//				system("cls");
-					cout<<"Masukkan data ...";
-					cin>>data[top];
-					top++;
-				}
-			}
-			
-			void dequeue(){
-				if(!isEmpty()){
-					for(int i=0; i<top-1;i++){
-						data[i]=data[i+1];
-					}
-				}
-				top--;
-			}
-			
-			void clear(){
-				top=0;
-			}
-			
-				
-			void tampil(){
-				if(!isEmpty()){
-					cout<<"Antrian data"<<endl;
-					for(int i=top-1;i>=0;i--){
-						cout<<i+1<<". "<<data[i]<<endl;
-					}
-				}else{
-					cout<<"Antrian kosong";
-				}
-				
-				if(isFull()){
-					cout<<"Antrian penuh"<<endl;
-				}
-				cout<<"\n+++++++++++++++++++++++++++\n"<<endl;
-			}	
+const int MAKSIMAL_ARRAY = 100; 
+
+// ==========================================
+// FUNGSI PENCARIAN (BUBBLE SORT + BINARY SEARCH)
+// ==========================================
+void cariData(string dataAsli[], int jumlahData) {
+    if(jumlahData == 0) {
+        cout << "Data kosong, tidak ada yang bisa dicari!\n";
+        return;
+    }
+
+    string target;
+    cout << "Masukkan data yang ingin dicari: ";
+    cin >> target;
+
+    // 1. Copy data biar Stack/Queue asli nggak rusak urutannya
+    string dataCopy[MAKSIMAL_ARRAY];
+    for(int i = 0; i < jumlahData; i++) {
+        dataCopy[i] = dataAsli[i];
+    }
+
+    // 2. Urutkan data salinan pakai BUBBLE SORT
+    for(int i = 0; i < jumlahData - 1; i++) {
+        for(int j = 0; j < jumlahData - i - 1; j++) {
+            if(dataCopy[j] > dataCopy[j + 1]) {
+                string temp = dataCopy[j];
+                dataCopy[j] = dataCopy[j + 1];
+                dataCopy[j + 1] = temp;
+            }
+        }
+    }
+
+    // 3. Cari pakai BINARY SEARCH
+    int kiri = 0;
+    int kanan = jumlahData - 1;
+    bool ketemu = false;
+
+    while(kiri <= kanan) {
+        int tengah = kiri + (kanan - kiri) / 2;
+        
+        if(dataCopy[tengah] == target) {
+            ketemu = true;
+            break;
+        } else if(dataCopy[tengah] < target) {
+            kiri = tengah + 1;
+        } else {
+            kanan = tengah - 1;
+        }
+    }
+
+    // Output Hasil Pencarian
+    cout << "--------------------------------\n";
+    if(ketemu) {
+        cout << "=> HASIL: Data '" << target << "' DITEMUKAN!\n";
+    } else {
+        cout << "=> HASIL: Data '" << target << "' TIDAK DITEMUKAN!\n";
+    }
+    cout << "--------------------------------\n";
+    
+    // Khusus pencarian aku kasih pause dikit biar hasilnya sempet kebaca
+    system("pause"); 
 }
 
-void stack(){
-	string data [max];
-	int top;
-	bool isEmpty(){
-		if(top==0){
-			return true;
+// ==========================================
+// STRUCT QUEUE
+// ==========================================
+struct Queue {
+	string data[MAKSIMAL_ARRAY];
+	int top = 0;
+	int batasMax; 
+	
+	bool isFull(){ return (top >= batasMax); }
+	bool isEmpty(){ return (top == 0); }		
+	
+	void enqueue(){
+		if(!isFull()){
+			cout << "Masukkan data: ";
+			cin >> data[top];
+			top++;
 		} else {
-			return false;
-		}
+            cout << "Antrian sudah Penuh!\n";
+        }
 	}
 	
-	bool isFull(){
-		if (top>= max){
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	void tampil (){
+	void dequeue(){
 		if(!isEmpty()){
-			cout<<"Data yang tersimpan"<<endl;
-			for(int i=0;i<top;i++){
-				cout<<i+1<<"."<<data[i]<<endl;
+			for(int i = 0; i < top - 1; i++){
+				data[i] = data[i+1];
 			}
-		}else {
-			cout<<"Data tidak tersedia"<<endl;
+			top--;
+		} else {
+            cout << "Antrian Kosong!\n";
+        }
+	}
+	
+	void clear(){
+		top = 0;
+	}
+	
+	void tampil(){
+		if(!isEmpty()){
+			cout << "--- Antrian Data ---" << endl;
+			for(int i = 0; i < top; i++){
+				cout << i+1 << ". " << data[i] << endl;
+			}
+		} else {
+			cout << "Antrian kosong\n";
 		}
-		
-		if (isFull()){
-			cout<<"Data sudah penuh!"<<endl;
+		cout << "\n+++++++++++++++++++++++++++\n";
+	}	
+
+    // Fungsi tambahan buat nyambungin ke Binary Search
+    void pencarian() {
+        cariData(data, top);
+    }
+};
+
+// ==========================================
+// STRUCT STACK
+// ==========================================
+struct Stack {
+	string data[MAKSIMAL_ARRAY];
+	int top = 0;
+	int batasMax; 
+	
+	bool isEmpty(){ return (top == 0); }
+	bool isFull(){ return (top >= batasMax); }
+	
+	void tampil(){
+		if(!isEmpty()){
+			cout << "--- Data yang tersimpan ---" << endl;
+			for(int i = top - 1; i >= 0; i--){ 
+				cout << i+1 << ". " << data[i] << endl;
+			}
+		} else {
+			cout << "Data tidak tersedia\n";
 		}
-		cout<<endl;
-		cout<<"////////////////////////////////\n\n";
+		cout << "\n////////////////////////////////\n";
 	}
 	
 	void push(){
 		if(!isFull()){
-			cout<<"Masukkan data : "<<endl;
-			cin>>data[top];
+			cout << "Masukkan data: ";
+			cin >> data[top];
 			top++;
-		}
+		} else {
+            cout << "Data sudah Penuh!\n";
+        }
 	}
 	
 	void pop(){
 		if(!isEmpty()){
 			top--;
-		}
+		} else {
+            cout << "Data Kosong!\n";
+        }
 	}
 	
 	void clear(){
-		top=0;
+		top = 0;
 	}
-}
 
-int main (){
+    // Fungsi tambahan buat nyambungin ke Binary Search
+    void pencarian() {
+        cariData(data, top);
+    }
+};
+
+// ==========================================
+// MAIN MENU
+// ==========================================
+int main(){
+    menuAwal:
 	int pilihan;
-	system("cls");
-	cout<<"Mau pakai yang mana :\n1. Stack\n2. Queue";
-	cin>>pilihan;
-	int max;
-	if(pilihan==1){
-		cout<<"Masukkan banyak data yang akan dimasukkan";
-		cin>>max;
-		stack();
+	system("cls"); 
+	cout << "Menu Pilihan:\n1. Stack\n2. Queue\nPilih... ";
+	cin >> pilihan;
+	
+	if(pilihan == 1){
+        Stack tumpukanKu;
+		cout << "Masukkan banyak maksimal data: ";
+		cin >> tumpukanKu.batasMax; 
 		
-			int pil;
-			stack:
-			system("cls"); tampil();
-			cout<<"Pilih menu : \n1. Push\n2. Pop\n3. Clear\nPilih...";
-			cin>>pil;
-			if(pil==1){
-				push();
-				goto stack;
-			}else if (pil == 2){
-				pop();
-				goto stack;
-			} else{
-				clear();
-				goto stack;
-			}
-		
-		goto menu;
-		
-	} else{
-		cout<<"Masukkan banyak data yang akan dimasukkan";
-		cin>>max;
-		
-		queue();
 		int pil;
-		queue:
-		system ("cls");
-		tampil();
+		stackMenu: 
+		system("cls"); 
+        
+        tumpukanKu.tampil(); 
 		
-		cout<<"Menu Pilihan\n1. Enqeue\n2. Dequeue\n3. Clear\n Pilihan... :";
-		cin>>pil;
-		if(pil==1){
-			cout<<"Enqueue"<<endl;
-			enqueue();
-			goto queue;
-		} else if (pil==2){
-			cout<<"Dequeue"<<endl;
-			dequeue();
-			goto queue;
-		} else if(pil==3){
-			clear();
-			goto queue;
-		}
+        cout << "Pilih menu:\n1. Push\n2. Pop\n3. Clear\n4. Pencarian\n5. Kembali\nPilih... ";
+		cin >> pil;
+		if(pil == 1){
+			tumpukanKu.push(); 
+            goto stackMenu;
+		} else if (pil == 2){
+			tumpukanKu.pop(); 
+            goto stackMenu;
+		} else if (pil == 3){
+			tumpukanKu.clear(); 
+			goto stackMenu;
+		} else if (pil == 4) {
+            tumpukanKu.pencarian();
+            goto stackMenu;
+        } else {
+            goto menuAwal; 
+        }
 		
-		goto menu;
+	} else if(pilihan == 2){
+        Queue antrianKu;
+		cout << "Masukkan banyak maksimal data: ";
+		cin >> antrianKu.batasMax; 
+		
+		int pil;
+		queueMenu:
+		system("cls");
+        
+		antrianKu.tampil();
+		
+		cout << "Menu Pilihan:\n1. Enqueue\n2. Dequeue\n3. Clear\n4. Pencarian\n5. Kembali\nPilihan... : ";
+		cin >> pil;
+		if(pil == 1){
+			antrianKu.enqueue(); 
+			goto queueMenu;
+		} else if (pil == 2){
+			antrianKu.dequeue(); 
+			goto queueMenu;
+		} else if (pil == 3){
+			antrianKu.clear(); 
+			goto queueMenu;
+		} else if (pil == 4) {
+            antrianKu.pencarian();
+            goto queueMenu;
+        } else {
+            goto menuAwal;
+        }
 	}
-	
-	
-	
+    
+    return 0;
 }
