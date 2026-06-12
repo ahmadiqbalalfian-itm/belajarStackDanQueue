@@ -1,0 +1,81 @@
+//pilih queue atau stack
+
+#include <iostream>
+using namespace std;
+
+string data [max];
+int top=0;
+
+		bool isFull(){
+			if(top>=max){
+				return true;
+			} else{
+				return false;
+			}
+		}
+		
+		bool isEmpty(){
+			if(top==0){
+				return true;
+			} else {
+				return false;
+			}
+		}		
+		
+		void enqueue(){
+			if(!isFull()){
+//				system("cls");
+				cout<<"Masukkan data ...";
+				cin>>data[top];
+				top++;
+			}
+		}
+		
+		void dequeue(){
+			if(!isEmpty()){
+				for(int i=0; i<top-1;i++){
+					data[i]=data[i+1];
+				}
+			}
+			top--;
+		}
+		
+		void clear(){
+			top=0;
+		}
+		
+			
+		void tampil(){
+			if(!isEmpty()){
+				cout<<"Antrian data"<<endl;
+				for(int i=top-1;i>=0;i--){
+					cout<<i+1<<". "<<data[i]<<endl;
+				}
+			}else{
+				cout<<"Antrian kosong";
+			}
+			
+			if(isFull()){
+				cout<<"Antrian penuh"<<endl;
+			}
+			cout<<"\n+++++++++++++++++++++++++++\n"<<endl;
+		}
+
+int main (){
+	int pilihan;
+	system("cls");
+	cout<<"Mau pakai yang mana :\n1. Stack\n2. Queue";
+	cin>>pilihan;
+	int max;
+	if(pilihan==1){
+		cout<<"Masukkan banyak data yang akan dimasukkan";
+		cin>>max;
+		stack();
+		goto menu;
+	} else{
+		cout<<"Masukkan banyak data yang akan dimasukkan";
+		cin>>max;
+		queue();
+		goto menu;
+	}
+}
