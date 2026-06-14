@@ -2,42 +2,34 @@
 DEVELOPER MENGEMBANGKAN PROGRAM BERSAMA GEMINI DALAM HISTORY CHAT BERIKUT
 https://gemini.google.com/share/4dc8fd063a11
 */
-
 #include <iostream>
 using namespace std;
-
-const int ARRAY = 10;//ini merupakan wadah awal, harus constanta
-
+const int ARRAY = 8;//ini merupakan wadah awal, harus constanta
 // ==========================================
 // 1. INI "SCTV" NYA (Wadah Utama / Parent Struct)
 // ==========================================
     string data[ARRAY];
     int top=0;
     int batasMax;
-
-// ==========================================
-// FUNGSI PENCARIAN (BUBBLE SORT + BINARY SEARCH)
-// ==========================================
 //    void pencarian() {
 //		cariData(data, top);
 //		}
-		
+// ==========================================
+// 2. FUNGSI PENCARIAN (BUBBLE SORT + BINARY SEARCH)
+// ==========================================		
 void cariData() {
     if(top == 0) {
         cout << "Data kosong, tidak ada yang bisa dicari!\n";
         return;
     }
-
     string target;
     cout << "Masukkan data yang ingin dicari: ";
     cin >> target;
-
     // 1. Copy data biar stack/queue asli nggak rusak urutannya
     string dataCopy[ARRAY];
     for(int i = 0; i < top; i++) {
         dataCopy[i] = data[i];
     }
-
     // 2. Urutkan data salinan pakai BUBBLE SORT
     for(int i = 0; i < top - 1; i++) {
         for(int j = 0; j < top - i - 1; j++) {
@@ -48,15 +40,12 @@ void cariData() {
             }
         }
     }
-
     // 3. Cari pakai BINARY SEARCH
     int kiri = 0;
     int kanan = top - 1;
     bool ketemu = false;
-
     while(kiri <= kanan) {
         int tengah = kiri + (kanan - kiri) / 2;
-        
         // INGAT: Di sini harus pakai dataCopy, BUKAN dataAsli!
         if(dataCopy[tengah] == target) {
             ketemu = true;
@@ -67,7 +56,6 @@ void cariData() {
             kanan = tengah - 1;
         }
     }
-
     // Output Hasil Pencarian
     cout << "--------------------------------\n";
     if(ketemu) {
@@ -76,20 +64,16 @@ void cariData() {
         cout << "=> HASIL: Data '" << target << "' TIDAK DITEMUKAN!\n";
     }
     cout << "--------------------------------\n";
-    
     system("pause");/*setelah system menampilkan status pencarian data,
     maka system dipause agar pesan sempat dibaca dengan notif :
     "Press any key to continue"
     apabila tidak dipause, maka system akan langsung membuka
 	opsimenu 1-5. Sehingga user belum sempat membaca hasil pencarian.
 	*/ 
-    
 }
-    
 //    WadahUtama() {
 //        top = 0; // Kasih nilai awal di sini biar aman dari error versi C++
 //    }
-
     bool isFull(){
 		return (top >= batasMax); 
 		}
@@ -99,9 +83,8 @@ void cariData() {
     void clear(){
 		top = 0;
 		}
-
 // ==========================================
-// 2. QUEUE (Mewarisi WadahUtama)
+// 3. QUEUE (Mewarisi WadahUtama)
 // ==========================================
     void enqueue(){
         if(!isFull()){
@@ -112,7 +95,6 @@ void cariData() {
             cout << "Antrian sudah Penuh!\n";
         }
     }
-    
     void dequeue(){
         if(!isEmpty()){
             for(int i = 0; i < top - 1; i++){
@@ -123,7 +105,6 @@ void cariData() {
             cout << "Antrian Kosong!\n";
         }
     }
-    
     // Tampil Queue (Jalan Maju)
     void tampilQ(){
         if(!isEmpty()){
@@ -136,12 +117,9 @@ void cariData() {
         }
         cout << "\n+++++++++++++++++++++++++++\n";
     }    
-
 // ==========================================
-// 3. STACK (Mewarisi WadahUtama)
+// 4. STACK (Mewarisi WadahUtama)
 // ==========================================
-
-
     void push(){
         if(!isFull()){
             cout << "Masukkan data: ";
@@ -151,7 +129,6 @@ void cariData() {
             cout << "Data sudah Penuh!\n";
         }
     }
-    
     void pop(){
         if(!isEmpty()){
             top--;
@@ -159,7 +136,6 @@ void cariData() {
             cout << "Data Kosong!\n";
         }
     }
-    
     // Tampil Stack (Jalan Mundur)
     void tampilS(){
         if(!isEmpty()){
@@ -172,7 +148,6 @@ void cariData() {
         }
         cout << "\n////////////////////////////////\n";
     }
-
 // ==========================================
 // MAIN MENU
 // ==========================================
@@ -182,18 +157,14 @@ int main(){
     system("cls"); 
     cout << "Menu Pilihan:\n1. Stack\n2. Queue\nPilih... ";
     cin >> pilihan;
-    
     if(pilihan == 1){
          // Bikin rumah (objek) Stack baru
         cout << "Masukkan banyak maksimal data: ";
         cin >> batasMax; 
-        
         int pil;
         stackMenu: 
         system("cls"); 
-        
         tampilS(); 
-        
         cout << "Pilih menu:\n1. Push\n2. Pop\n3. Clear\n4. Pencarian\n5. Kembali\nPilih... ";
         cin >> pil;
         if(pil == 1){
@@ -214,18 +185,14 @@ int main(){
 	    	cout<<"MOHON MASUKKAN PILIHAN YANG BENAR";
 	    	goto stackMenu;
 		}
-        
     } else if(pilihan == 2){
          // Bikin rumah (objek) Queue baru
         cout << "Masukkan banyak maksimal data: ";
         cin >> batasMax; 
-        
         int pil;
         queueMenu:
         system("cls");
-        
         tampilQ();
-        
         cout << "Menu Pilihan:\n1. Enqueue\n2. Dequeue\n3. Clear\n4. Pencarian\n5. Kembali\nPilihan... : ";
         cin >> pil;
         if(pil == 1){
@@ -250,6 +217,5 @@ int main(){
     	cout<<"MOHON MASUKKAN PILIHAN YANG BENAR";
     	goto menuAwal;
 	}
-    
     return 0;
 }
