@@ -206,7 +206,7 @@ int main(){
             clear(); 
             goto stackMenu;
         } else if (pil == 4) {
-            pencarian();
+            cariData();
             goto stackMenu;
         } else {
             goto menuAwal; 
@@ -235,7 +235,7 @@ int main(){
             clear(); 
             goto queueMenu;
         } else if (pil == 4) {
-            pencarian();
+            cariData();
             goto queueMenu;
         } else {
             goto menuAwal;
