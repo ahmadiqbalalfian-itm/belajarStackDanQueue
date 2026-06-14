@@ -8,9 +8,18 @@ const int ARRAY = 8;//ini merupakan wadah awal, harus constanta
 // ==========================================
 // 1. INI "SCTV" NYA (Wadah Utama / Parent Struct)
 // ==========================================
-    string data[ARRAY];
-    int top=0;
-    int batasMax;
+/*a*/string data[ARRAY];
+/*b*/int top=0;
+/*c*/int batasMax;
+/*d*/bool isFull(){
+		return (top >= batasMax); 
+		}
+/*e*/bool isEmpty(){
+		return (top == 0);
+		}
+/*f*/void clear(){
+		top = 0;
+		}
 //    void pencarian() {
 //		cariData(data, top);
 //		}
@@ -18,19 +27,19 @@ const int ARRAY = 8;//ini merupakan wadah awal, harus constanta
 // 2. FUNGSI PENCARIAN (BUBBLE SORT + BINARY SEARCH)
 // ==========================================		
 void cariData() {
-    if(top == 0) {
+/*a*/if(top == 0) {
         cout << "Data kosong, tidak ada yang bisa dicari!\n";
         return;
     }
-    string target;
+/*a*/string target;
     cout << "Masukkan data yang ingin dicari: ";
     cin >> target;
-    // 1. Copy data biar stack/queue asli nggak rusak urutannya
+// b. Copy data biar stack/queue asli nggak rusak urutannya
     string dataCopy[ARRAY];
     for(int i = 0; i < top; i++) {
         dataCopy[i] = data[i];
     }
-    // 2. Urutkan data salinan pakai BUBBLE SORT
+// c. Urutkan data salinan pakai BUBBLE SORT
     for(int i = 0; i < top - 1; i++) {
         for(int j = 0; j < top - i - 1; j++) {
             if(dataCopy[j] > dataCopy[j + 1]) {
@@ -40,7 +49,7 @@ void cariData() {
             }
         }
     }
-    // 3. Cari pakai BINARY SEARCH
+// d. Cari pakai BINARY SEARCH
     int kiri = 0;
     int kanan = top - 1;
     bool ketemu = false;
@@ -56,7 +65,7 @@ void cariData() {
             kanan = tengah - 1;
         }
     }
-    // Output Hasil Pencarian
+// e. Output Hasil Pencarian
     cout << "--------------------------------\n";
     if(ketemu) {
         cout << "=> HASIL: Data '" << target << "' DITEMUKAN!\n";
@@ -74,19 +83,10 @@ void cariData() {
 //    WadahUtama() {
 //        top = 0; // Kasih nilai awal di sini biar aman dari error versi C++
 //    }
-    bool isFull(){
-		return (top >= batasMax); 
-		}
-    bool isEmpty(){
-		return (top == 0);
-		}
-    void clear(){
-		top = 0;
-		}
 // ==========================================
 // 3. QUEUE (Mewarisi WadahUtama)
 // ==========================================
-    void enqueue(){
+/*a*/void enqueue(){
         if(!isFull()){
             cout << "Masukkan data: ";
             cin >> data[top];
@@ -95,7 +95,7 @@ void cariData() {
             cout << "Antrian sudah Penuh!\n";
         }
     }
-    void dequeue(){
+/*b*/void dequeue(){
         if(!isEmpty()){
             for(int i = 0; i < top - 1; i++){
                 data[i] = data[i+1];
@@ -106,7 +106,7 @@ void cariData() {
         }
     }
     // Tampil Queue (Jalan Maju)
-    void tampilQ(){
+/*c*/void tampilQ(){
         if(!isEmpty()){
             cout << "--- Antrian Data ---" << endl;
             for(int i = 0; i < top; i++){
@@ -120,7 +120,7 @@ void cariData() {
 // ==========================================
 // 4. STACK (Mewarisi WadahUtama)
 // ==========================================
-    void push(){
+/*a*/void push(){
         if(!isFull()){
             cout << "Masukkan data: ";
             cin >> data[top];
@@ -129,7 +129,7 @@ void cariData() {
             cout << "Data sudah Penuh!\n";
         }
     }
-    void pop(){
+/*b*/void pop(){
         if(!isEmpty()){
             top--;
         } else {
@@ -137,7 +137,7 @@ void cariData() {
         }
     }
     // Tampil Stack (Jalan Mundur)
-    void tampilS(){
+/*c*/void tampilS(){
         if(!isEmpty()){
             cout << "--- Data yang tersimpan ---" << endl;
             for(int i = top - 1; i >= 0; i--){ 
@@ -152,12 +152,12 @@ void cariData() {
 // MAIN MENU
 // ==========================================
 int main(){
-    menuAwal:
+/*a*/menuAwal:
     int pilihan;
     system("cls"); 
     cout << "Menu Pilihan:\n1. Stack\n2. Queue\nPilih... ";
     cin >> pilihan;
-    if(pilihan == 1){
+/*b*/if(pilihan == 1){
          // Bikin rumah (objek) Stack baru
         cout << "Masukkan banyak maksimal data: ";
         cin >> batasMax; 
@@ -167,7 +167,7 @@ int main(){
         tampilS(); 
         cout << "Pilih menu:\n1. Push\n2. Pop\n3. Clear\n4. Pencarian\n5. Kembali\nPilih... ";
         cin >> pil;
-        if(pil == 1){
+	   if(pil == 1){
             push(); 
             goto stackMenu;
         } else if (pil == 2){
@@ -185,7 +185,7 @@ int main(){
 	    	cout<<"MOHON MASUKKAN PILIHAN YANG BENAR";
 	    	goto stackMenu;
 		}
-    } else if(pilihan == 2){
+/*c*/} else if(pilihan == 2){
          // Bikin rumah (objek) Queue baru
         cout << "Masukkan banyak maksimal data: ";
         cin >> batasMax; 
@@ -213,7 +213,7 @@ int main(){
 	    	cout<<"MOHON MASUKKAN PILIHAN YANG BENAR";
 	    	goto queueMenu;
 		}
-    } else {
+/*d*/} else {
     	cout<<"MOHON MASUKKAN PILIHAN YANG BENAR";
     	goto menuAwal;
 	}
