@@ -208,9 +208,12 @@ int main(){
         } else if (pil == 4) {
             cariData();
             goto stackMenu;
-        } else {
+        } else if (pil==5) {
             goto menuAwal; 
-        }
+        } else {
+	    	cout<<"MOHON MASUKKAN PILIHAN YANG BENAR";
+	    	goto stackMenu;
+		}
         
     } else if(pilihan == 2){
          // Bikin rumah (objek) Queue baru
@@ -237,10 +240,16 @@ int main(){
         } else if (pil == 4) {
             cariData();
             goto queueMenu;
-        } else {
+        } else if (pil== 5){
             goto menuAwal;
-        }
-    }
+        } else {
+	    	cout<<"MOHON MASUKKAN PILIHAN YANG BENAR";
+	    	goto queueMenu;
+		}
+    } else {
+    	cout<<"MOHON MASUKKAN PILIHAN YANG BENAR";
+    	goto menuAwal;
+	}
     
     return 0;
 }
