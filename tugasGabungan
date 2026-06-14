@@ -6,13 +6,24 @@ https://gemini.google.com/share/4dc8fd063a11
 #include <iostream>
 using namespace std;
 
-const int MAKSIMAL_ARRAY = 10;//ini merupakan wadah awal, harus 
+const int ARRAY = 10;//ini merupakan wadah awal, harus constanta
+
+// ==========================================
+// 1. INI "SCTV" NYA (Wadah Utama / Parent Struct)
+// ==========================================
+    string data[ARRAY];
+    int top=0;
+    int batasMax;
 
 // ==========================================
 // FUNGSI PENCARIAN (BUBBLE SORT + BINARY SEARCH)
 // ==========================================
-void cariData(string dataAsli[], int jumlahData) {
-    if(jumlahData == 0) {
+//    void pencarian() {
+//		cariData(data, top);
+//		}
+		
+void cariData() {
+    if(top == 0) {
         cout << "Data kosong, tidak ada yang bisa dicari!\n";
         return;
     }
@@ -22,14 +33,14 @@ void cariData(string dataAsli[], int jumlahData) {
     cin >> target;
 
     // 1. Copy data biar stack/queue asli nggak rusak urutannya
-    string dataCopy[MAKSIMAL_ARRAY];
-    for(int i = 0; i < jumlahData; i++) {
-        dataCopy[i] = dataAsli[i];
+    string dataCopy[ARRAY];
+    for(int i = 0; i < top; i++) {
+        dataCopy[i] = data[i];
     }
 
     // 2. Urutkan data salinan pakai BUBBLE SORT
-    for(int i = 0; i < jumlahData - 1; i++) {
-        for(int j = 0; j < jumlahData - i - 1; j++) {
+    for(int i = 0; i < top - 1; i++) {
+        for(int j = 0; j < top - i - 1; j++) {
             if(dataCopy[j] > dataCopy[j + 1]) {
                 string temp = dataCopy[j];
                 dataCopy[j] = dataCopy[j + 1];
@@ -40,7 +51,7 @@ void cariData(string dataAsli[], int jumlahData) {
 
     // 3. Cari pakai BINARY SEARCH
     int kiri = 0;
-    int kanan = jumlahData - 1;
+    int kanan = top - 1;
     bool ketemu = false;
 
     while(kiri <= kanan) {
@@ -74,19 +85,10 @@ void cariData(string dataAsli[], int jumlahData) {
 	*/ 
     
 }
-
-// ==========================================
-// 1. INI "SCTV" NYA (Wadah Utama / Parent Struct)
-// ==========================================
-    string data[MAKSIMAL_ARRAY];
-    int top;
-    int batasMax;
     
 //    WadahUtama() {
 //        top = 0; // Kasih nilai awal di sini biar aman dari error versi C++
 //    }
-
-int top = 0;
 
     bool isFull(){
 		return (top >= batasMax); 
@@ -96,9 +98,6 @@ int top = 0;
 		}
     void clear(){
 		top = 0;
-		}
-    void pencarian() {
-		cariData(data, top);
 		}
 
 // ==========================================
